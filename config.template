@@ -1,0 +1,25 @@
+;;; -*- mode: lisp -*-
+
+(in-package :fx)
+
+(defparameter *fixer-access-token* "")
+(defparameter *fixer-data-url* "http://data.fixer.io/api")
+
+(defparameter *fixer-latest* (format nil "~A/~A" *fixer-data-url* "latest")
+  "? access_key = your api access key
+   & base = CAD
+   & symbols = USD,AUD,EUR,MXN")
+
+(defparameter *fixer-convert* (format nil "~A/~A" *fixer-data-url* "convert")
+  "? access_key = your api access key
+   & from = USD
+   & to   = CAD
+   & amount = 100")
+
+(defparameter *fixer-timeseries* (format nil "~A/~A" *fixer-data-url* "timeseries")
+  "? access_key = your api access key 
+   & start_date = YYYY-MM-DD
+   & end_date   = YYYY-MM-DD
+   & base = CAD
+   & symbols = USDF,AUD,EUR,MXN")
+
