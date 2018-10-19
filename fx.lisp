@@ -21,8 +21,8 @@
 (defun latest (base &rest currs)
   "Get the latest exchange rates for currs vs. base"
   (let* ((qstring
-           (format nil "?access_key=~A&base=~A&symbols=~{~A~^,~}" *fixer-access-token* base currs))
-         (qurl (format nil "~A/~A" *fixer-latest* qstring)))
+           (format nil "?access_key=~A&base=~A&symbols=~{~A~^,~}" *fx-access-token* base currs))
+         (qurl (format nil "~A/~A" *fx-latest* qstring)))
     (princ qurl)
     (terpri)
     (cl-json:decode-json-from-string
