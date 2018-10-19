@@ -2,7 +2,7 @@
 ;;;; fx.asd
 
 (asdf:defsystem #:fx
-  :description "interface to the currency API at fixer.io"
+  :description "interface to a currency conversion API"
   :author "Brian O'Reilly <fade@deepsky.com>"
   :license "Modified BSD License"
   :serial t
@@ -10,7 +10,8 @@
                #:CL-JSON
                #:CL-PPCRE
                #:NET.DIDIERVERNA.CLON
-               #:SIMPLE-DATE-TIME)
+               #:SIMPLE-DATE-TIME
+               #:FLEXI-STREAMS)
   :pathname "./"
   :components ((:file "app-utils")
                (:file "fx")
