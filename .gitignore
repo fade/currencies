@@ -3,3 +3,4 @@
 /quicklisp-manifest.txt
 /slime.lisp
 /buildapp
+*.fasl
