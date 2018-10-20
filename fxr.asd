@@ -1,7 +1,7 @@
 ;; -*-lisp-*-
-;;;; fx.asd
+;;;; fxr.asd
 
-(asdf:defsystem #:fx
+(asdf:defsystem #:fxr
   :description "interface to a currency conversion API"
   :author "Brian O'Reilly <fade@deepsky.com>"
   :license "Modified BSD License"
@@ -14,6 +14,6 @@
                #:FLEXI-STREAMS)
   :pathname "./"
   :components ((:file "app-utils")
-               (:file "fx")
+               (:file "fxr")
                (:file "config")))
 

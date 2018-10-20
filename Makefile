@@ -1,7 +1,7 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-PACKAGE=fx
-PACKAGEUTILS=fx.app-utils
-OUT=fx
+PACKAGE=fxr
+PACKAGEUTILS=fxr.app-utils
+OUT=fxr
 ENTRY=-main
 
 $(OUT): buildapp *.lisp quicklisp-manifest.txt
@@ -10,6 +10,7 @@ $(OUT): buildapp *.lisp quicklisp-manifest.txt
 				--eval '(push "$(ROOT_DIR)/" asdf:*central-registry*)' \
 				--load-system $(PACKAGE) \
 				--eval '($(PACKAGEUTILS)::internal-disable-debugger)' \
+				--compress-core  \
 				--output $(OUT) --entry $(PACKAGE):$(ENTRY)
 
 quicklisp-manifest.txt: *.asd

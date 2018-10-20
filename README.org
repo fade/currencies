@@ -1,0 +1,8 @@
+This system defines an interface to the 1Forge currency exchange API,
+which is the only one I've found that will allow me to query rates
+based on a base currency within the free tier of access. You will need
+to sign up at [[https://1forge.com][1forge API home]] to get a viable api_key, copy
+config.template to config.lisp and change the lisp file as appropriate
+for your own access token for any of this to work. The free tier is
+limited to 1000 requests per day. This counter turns over at midnight
+EST (New York, New York).

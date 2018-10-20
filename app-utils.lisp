@@ -1,11 +1,11 @@
 ;; -*-lisp-*-
 
-(defpackage :fx.app-utils
+(defpackage :fxr.app-utils
   (:use :cl)
   (:export :internal-disable-debugger)
   (:export :internal-quit))
 
-(in-package :fx.app-utils)
+(in-package :fxr.app-utils)
   
 (defun internal-disable-debugger ()
   (labels
