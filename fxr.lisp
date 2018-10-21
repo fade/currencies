@@ -22,16 +22,27 @@
     (cl-json:decode-json-from-string
      (octets-to-string (drakma:http-request qurl)))))
 
-(defun get-fxsymbols-list ()
+(defun get-fxsymbols-list (&key raw)
   "Get a list of all the available currency trading pairs."
   (let* ((qstring
            (format nil "?api_key=~A" *fxr-access-token*))
          (qurl (format nil "~A~A" *fxr-symbols-url* qstring)))
     (princ qurl)
     (terpri)
+    (if raw
+        (octets-to-string (drakma:http-request qurl))
+        (cl-json:decode-json-from-string
+         (octets-to-string (drakma:http-request qurl))))))
+
+(defun convert-pairs (base targ quantity)
+  "return the value of QUANTITY BASE in terms of TARG."
+  (let* ((qstring
+           (format nil "?from=~A&to=~A&quantity=~A&api_key=~A" base targ quantity *fxr-access-token*))
+         (qurl (format nil "~A~A" *fxr-convert-url* qstring)))
+    (princ qurl)
+    (terpri)
     (cl-json:decode-json-from-string
      (octets-to-string (drakma:http-request qurl)))))
-
 
 ;;===============================================================================
 ;; Commandline machinery follows
