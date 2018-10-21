@@ -13,7 +13,7 @@
   (simple-date-time:YYYY-MM-DD (simple-date-time:from-universal-time now)))
 
 (defun latest-pairs (&rest currs)
-  "Get the latest exchange rates for currs vs. base"
+  "Get the latest exchange rates for pairs of CURRS"
   (let* ((qstring
            (format nil "?&pairs=~{~A~^,~}&api_key=~A" currs *fxr-access-token*)) ;;
          (qurl (format nil "~A~A" *fxr-quotes-url* qstring)))
@@ -43,6 +43,25 @@
     (terpri)
     (cl-json:decode-json-from-string
      (octets-to-string (drakma:http-request qurl)))))
+
+(defun is-market-open? (&key raw)
+  (let* ((qstring
+           (format nil "?api_key=~A" *fxr-access-token*))
+         (qurl (format nil "~A~A" *fxr-market-status* qstring)))
+    (princ qurl)
+    (terpri)
+    (if raw
+        (octets-to-string (drakma:http-request qurl))
+        (cl-json:decode-json-from-string
+         (octets-to-string (drakma:http-request qurl))))))
+
+(defun quota-check ()
+  "return the remaining quota for current 24 hour period."
+  (let* ((qstring
+           (format nil "?api_key=~A" *fxr-access-token*))
+         (qurl (format nil "~A~A" *fxr-quota* qstring)))
+    (cl-json:decode-json-from-string
+         (octets-to-string (drakma:http-request qurl)))))
 
 ;;===============================================================================
 ;; Commandline machinery follows
