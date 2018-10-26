@@ -3,14 +3,19 @@
 (defpackage :fxr
   (:use :cl)
   (:use :fxr.app-utils :drakma :cl-json :cl-ppcre :flexi-streams)
-  (:export :-main))
+  (:export :-main
+   :latest-pairs
+           :get-fxsymbols-list
+   :convert-pairs
+           :is-market-open?
+   :quota-check))
 
 (in-package :fxr)
 
-(defun now (&key (now (get-universal-time)))
-  "return the present YYYY-MM-DD date unless given something, in which
-   case that is returned."
-  (simple-date-time:YYYY-MM-DD (simple-date-time:from-universal-time now)))
+;; (defun now (&key (now (get-universal-time)))
+;;   "return the present YYYY-MM-DD date unless given something, in which
+;;    case that is returned."
+;;   (simple-date-time:YYYY-MM-DD (simple-date-time:from-universal-time now)))
 
 (defun latest-pairs (&rest currs)
   "Get the latest exchange rates for pairs of CURRS"
@@ -55,13 +60,15 @@
         (cl-json:decode-json-from-string
          (octets-to-string (drakma:http-request qurl))))))
 
-(defun quota-check ()
+(defun quota-check (&key raw)
   "return the remaining quota for current 24 hour period."
   (let* ((qstring
            (format nil "?api_key=~A" *fxr-access-token*))
          (qurl (format nil "~A~A" *fxr-quota* qstring)))
-    (cl-json:decode-json-from-string
-         (octets-to-string (drakma:http-request qurl)))))
+    (if raw
+        (octets-to-string (drakma:http-request qurl))
+        (cl-json:decode-json-from-string
+         (octets-to-string (drakma:http-request qurl))))))
 
 ;;===============================================================================
 ;; Commandline machinery follows
