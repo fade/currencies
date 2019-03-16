@@ -44,12 +44,14 @@
   (let* ((qstring
            (format nil "?from=~A&to=~A&quantity=~A&api_key=~A" base targ quantity *fxr-access-token*))
          (qurl (format nil "~A~A" *fxr-convert-url* qstring)))
-    (princ qurl)
-    (terpri)
+    ;; (princ qurl) ;; debuggery.
+    ;; (terpri)
     (cl-json:decode-json-from-string
      (octets-to-string (drakma:http-request qurl)))))
 
 (defun is-market-open? (&key raw)
+  ;; this doesn't work, because cl-json doesn't decode the 'false'
+  ;; correctly; it is lost as the final cdr of the list.  
   (let* ((qstring
            (format nil "?api_key=~A" *fxr-access-token*))
          (qurl (format nil "~A~A" *fxr-market-status* qstring)))
@@ -75,6 +77,7 @@
 ;;===============================================================================
 
 (defun -main (&optional args)
+  (declare (ignorable args))
   (format t "~a~%" "I don't do much yet"))
 
 
